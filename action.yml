@@ -1,0 +1,34 @@
+name: Chrono Backfill Agent
+description: "Create backdated commits to backfill GitHub contribution graph"
+author: "chrono-git"
+branding:
+  icon: clock
+  color: blue
+
+inputs:
+  year:
+    description: "Year to backfill (e.g., 2024)"
+    required: true
+  branch:
+    description: "Target branch"
+    required: false
+    default: "main"
+  dates_json:
+    description: "Optional JSON array of YYYY-MM-DD strings"
+    required: false
+  message:
+    description: "Commit message prefix"
+    required: false
+    default: "Backfill"
+  author_name:
+    description: "Git author name"
+    required: false
+    default: "Heatmap Bot"
+  author_email:
+    description: "Git author email (use verified/no-reply)"
+    required: false
+    default: "${{ github.actor }}@users.noreply.github.com"
+
+runs:
+  using: docker
+  image: Dockerfile
