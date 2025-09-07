@@ -1,10 +1,14 @@
 name: Publish backfill image
 on:
   push:
-    branches: [main]
+    branches: [ main ]
     paths:
-      - "actions/chrono-git-docker/**"
-      - ".github/workflows/publish-backfill-image.yml"
+      - 'Dockerfile'
+      - 'index.mjs'
+      - 'package.json'
+      - 'action.yml'
+      - '.dockerignore'
+      - '.github/workflows/publish-backfill-image.yml'
   workflow_dispatch: {}
 
 permissions:
@@ -15,7 +19,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ghcr.io/tusharsoni014/chrono-git-backfill
+      IMAGE_NAME: ghcr.io/YOUR_GH_USER_OR_ORG/chrono-backfill
     steps:
       - uses: actions/checkout@v4
 
@@ -38,7 +42,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: actions/chrono-git-docker
+          context: .
+          file: ./Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
